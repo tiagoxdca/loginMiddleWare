@@ -1,29 +1,34 @@
 package util;
 
+import domain.User;
+
 import java.sql.*;
 
 public class DB {
 
     // JDBC driver name and database URL
-    private String DB_URL = "jdbc:mysql://localhost/LoginStorage";
+    private String DB_URL = "jdbc:mysql://localhost/login_storage";
 
     //  Database credentials
     private String USER = "root";
     private String PASS = "q1w2e3r4";
 
     private Connection conn;
+    private static boolean database_created = false;
 
     private static DB instance;
 
+
     private DB() throws SQLException {
         conn = DriverManager.getConnection(DB_URL,USER,PASS);
+        System.out.println("Connection establish with success...");
     }
+
 
     public static synchronized DB getConnection() throws SQLException {
         if(instance == null) {
             instance = new DB();
         }
-
         return instance;
     }
 
@@ -47,10 +52,6 @@ public class DB {
         }
     }
 
-    //CRUD
-    public int update() {
-        return 0;
-    }
 
     public Connection getConn() {
         return conn;
